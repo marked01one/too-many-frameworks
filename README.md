@@ -1,8 +1,8 @@
 # Too Many Frameworks
-### 1 App, 70+ Tech Stacks?
-This repository is an attempt for me to build 10 REST APIs and 7 frontend user interfaces. The catch? 
+### One App... 70+ Tech Stacks???
+This repository is an attempt for me to build 10 REST APIs and 7 frontend user interfaces. 
 
-**Each API & UI uses a different framework**
+The catch? **Each backend/frontend uses a different framework & programming language**
 
 That means that if you mix and match, up to **70 different tech stacks** can be used to run this app. This number can even increase depending on how the project will expand in the future.
 
