@@ -1,5 +1,16 @@
 {
   "cSpell.words": [
     "Todos"
+  ],
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 6000,
+      "driver": "PostgreSQL",
+      "name": "tmf_todo_list",
+      "username": "postgres",
+      "database": "tmf_todo_list"
+    }
   ]
 }
