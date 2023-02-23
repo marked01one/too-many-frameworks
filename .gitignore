@@ -39,3 +39,5 @@ notes.md
 
 .env
 env
+
+backend/ExpressJS/node_modules/*
