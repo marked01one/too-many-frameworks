@@ -11,6 +11,7 @@ class TodoUser(models.Model):
   user_email = models.CharField(unique=True, max_length=31, validators=[validate_email])
   
   class Meta:
+    app_label = 'api'
     managed = True
     db_table = 'todo_users'
     
@@ -24,6 +25,7 @@ class TodoList(models.Model):
   name = models.CharField(max_length=255)
   
   class Meta:
+    app_label = 'api'
     managed = True
     db_table = 'todo_lists'
   
@@ -40,6 +42,7 @@ class Todo(models.Model):
   completed = models.BooleanField(default=False)
   
   class Meta:
+    app_label = 'api'
     managed = True
     db_table = 'todos'
   

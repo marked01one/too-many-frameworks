@@ -35,13 +35,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'api',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api',
     'rest_framework'
     
 ]
@@ -110,15 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Django REST Framework settings
-
 REST_FRAMEWORK = {
-  'DEFAULT_AUTHENTICATION_CLASSES': {
-    'rest_framework_simplejwt.authentication.JWTAuthentication'
-  }
+  'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
-
 
 
 # Internationalization
