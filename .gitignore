@@ -41,3 +41,8 @@ notes.md
 env
 
 backend/ExpressJS/node_modules/*
+
+
+# Ignore Rust /target/ directory and Cargo.lock
+backend/RustRocket/target/*
+Cargo.lock
