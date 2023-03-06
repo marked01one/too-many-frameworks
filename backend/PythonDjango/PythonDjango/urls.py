@@ -22,6 +22,7 @@ from api import views
 router = routers.DefaultRouter()
 
 router.register('', views.TodoUserViewSet, basename='users')
+router.register('', views.TodoListViewSet, basename='lists')
 
 
 urlpatterns = [

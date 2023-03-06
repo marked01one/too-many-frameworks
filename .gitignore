@@ -46,3 +46,10 @@ backend/ExpressJS/node_modules/*
 # Ignore Rust /target/ directory and Cargo.lock
 backend/RustRocket/target/*
 Cargo.lock
+
+
+# Ignore Ruby on Rails files
+Gemfile.lock
+backend/RubyOnRails/log/*
+backend/RubyOnRails/tmp/*
+*.rbc
