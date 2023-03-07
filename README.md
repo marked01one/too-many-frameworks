@@ -14,3 +14,4 @@ The app itself is a simple to-do list application that have certain basic functi
 * Users will have **basic authentication features** like regex-filtered passwords and hashing.
 
 ## Frameworks
+The app will use a total of 10

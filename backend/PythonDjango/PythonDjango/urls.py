@@ -23,6 +23,7 @@ router = routers.DefaultRouter()
 
 router.register('', views.TodoUserViewSet, basename='users')
 router.register('', views.TodoListViewSet, basename='lists')
+router.register('', views.TodoViewSet, basename='todos')
 
 
 urlpatterns = [
