@@ -1,4 +1,5 @@
 from django.db import IntegrityError
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework import viewsets, permissions, status, authentication
@@ -211,14 +212,14 @@ class TodoListViewSet(viewsets.ViewSet):
     # Create new todo list belonging to the authenticated user
     if request.method == 'POST':
       try:
-        obj = TodoList.objects.create(user=user, name=request.data['name'])
+        todo_list = TodoList.objects.create(user=user, name=request.data['name'])
         return Response(status=status.HTTP_201_CREATED, data={
           "statusCode": 201,
           "message": f"New Todo List successfully 'created' for:",
           "content": {
-            "id": obj.pk,
-            "user_name": obj.user.user_name,
-            "list_name": obj.name
+            "id": todo_list.pk,
+            "user_name": todo_list.user.user_name,
+            "list_name": todo_list.name
           }
         })
       # Handle all cases where the given keys in the request body is incorrect
@@ -228,7 +229,7 @@ class TodoListViewSet(viewsets.ViewSet):
           "message": "Bad request error. Potentially caused by improper request body."
         })
 
-  
+  # Update the name of the list
   @action(detail=False, methods=['POST'], url_path='lists/update')
   def update_list(self, request):
     try:
@@ -302,7 +303,6 @@ class TodoViewSet(viewsets.ViewSet):
         "message": f"Not found error. User with ID of '{pk}' does not exist."
       })
   
-  
   def get_specific_list(self, pk: int, user: TodoUser) -> TodoList:
     '''
     Get list details form request
@@ -314,6 +314,8 @@ class TodoViewSet(viewsets.ViewSet):
         "statusCode": status.HTTP_404_NOT_FOUND,
         "message": f"No list with ID of '{pk}' exists for this user."
       })
+  
+  
   
   @action(detail=False, methods=['GET'], url_path='todos')
   def all_todos(self, request):
@@ -329,7 +331,7 @@ class TodoViewSet(viewsets.ViewSet):
       todo_list = self.get_specific_list(pk=request.data['list_id'], user=user)
     except KeyError:
       queryset = Todo.objects.filter(user=user)
-      serializer = TodoUserSerializer(queryset, many=True)
+      serializer = TodoSerializer(queryset, many=True)
       return Response(status=status.HTTP_200_OK, data={
         "statusCode": status.HTTP_200_OK,
         "content": {
@@ -363,8 +365,43 @@ class TodoViewSet(viewsets.ViewSet):
         "content": serializer.data
       })
 
-  
+  # Create new todo  
   @action(detail=False, methods=['POST'], url_path='todos/create')
   def create_todos(self, request):
     user = TodoUser.objects.get(pk=request.data['user_id'])
     todo_list = TodoList.objects.get(pk=request.data['list_id'], user=user)
+    
+    todo = Todo(
+      user=user,
+      todo_list=todo_list,
+      title=request.data['title'] if request.data['title'] else request.data['description'][:255],
+      description=request.data['description'],
+      completed=False
+    )
+    todo.save()
+    return Response(data={
+      "statusCode": status.HTTP_200_OK,
+      "message": "New todo created successfully",
+      "content": {
+        "user": todo.user.user_name,
+        "todo_list": todo.todo_list.name,
+        "title": todo.title,
+        "description": todo.description,
+      }
+    })
+  
+  # Delete given todo
+  @action(detail=False, methods=['DELETE'], url_path='todos/delete')
+  def delete_todos(self, request):
+    todo = Todo.objects.get(
+      user_id=request.data['user_id'],
+      todo_list_id=request.data['todo_list_id'],
+      pk=request.data['id']
+    )
+    todo.delete()
+    return Response({
+      "statusCode": status.HTTP_200_OK,
+      "message": "Todo successfully deleted"
+    }, status=status.HTTP_200_OK)
+    
+    
