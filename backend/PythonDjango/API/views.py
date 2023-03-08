@@ -324,7 +324,7 @@ class TodoViewSet(viewsets.ViewSet):
         "statusCode": status.HTTP_400_BAD_REQUEST,
         "message": f"Bad request error. Potentially caused by an improper request body."
       })
-    
+    # Return a list of all todos of a particular user if `list_id` is not included
     try:
       todo_list = self.get_specific_list(pk=request.data['list_id'], user=user)
     except KeyError:
