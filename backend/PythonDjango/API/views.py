@@ -319,6 +319,16 @@ class TodoViewSet(viewsets.ViewSet):
   
   @action(detail=False, methods=['GET'], url_path='todos')
   def all_todos(self, request):
+    '''
+    Get a specific todos, or all todos of a specific list or user
+    ### Sample Request body
+    ```json
+    {
+      "user_id": 
+    }
+    ```
+    '''
+    
     try:
       user = self.get_specific_user(pk=request.data['user_id'])
     except KeyError:
@@ -365,16 +375,29 @@ class TodoViewSet(viewsets.ViewSet):
         "content": serializer.data
       })
 
+
   # Create new todo  
   @action(detail=False, methods=['POST'], url_path='todos/create')
   def create_todos(self, request):
+    '''
+    Create new todo
+    ### Sample Request body
+    ```json
+    {
+      "user_id": 1,
+      "todo_list_id": 2,
+      "title": "New List",
+      "description": "Hello everyone this is a new list"
+    }
+    ```
+    '''
     user = TodoUser.objects.get(pk=request.data['user_id'])
-    todo_list = TodoList.objects.get(pk=request.data['list_id'], user=user)
+    todo_list = TodoList.objects.get(pk=request.data['todo_list_id'], user=user)
     
     todo = Todo(
       user=user,
       todo_list=todo_list,
-      title=request.data['title'] if request.data['title'] else request.data['description'][:255],
+      title=request.data['title'],
       description=request.data['description'],
       completed=False
     )
@@ -393,6 +416,16 @@ class TodoViewSet(viewsets.ViewSet):
   # Delete given todo
   @action(detail=False, methods=['DELETE'], url_path='todos/delete')
   def delete_todos(self, request):
+    '''
+    Delete given todo
+    ### Sample Request body
+    ```json
+    {
+      "user_id": 1,
+      "todo_list_id": 2
+    }
+    ```
+    '''
     todo = Todo.objects.get(
       user_id=request.data['user_id'],
       todo_list_id=request.data['todo_list_id'],
