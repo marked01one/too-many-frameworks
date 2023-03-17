@@ -41,11 +41,11 @@ VALUES
 -- TODO1: Testing users. If query returns with error --> It's working properly
 
 -- @block Test adding users with duplicate name
-INSERT INTO users (name, password, email)
+INSERT INTO todo_users (user_name, user_password, user_email)
   VALUES ('alex1234', 'Pa$$w0rd', 'alex@faketest.com')
 
 -- @block Test adding users with duplicate emails
-INSERT INTO users (name, password, email)
+INSERT INTO todo_users (user_name, user_password, user_email)
   VALUES ('alex1234fake', 'Pa$$w0rd', 'alex@test.com')
 
 

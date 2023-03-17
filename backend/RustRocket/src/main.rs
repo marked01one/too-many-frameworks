@@ -1,25 +1,36 @@
+#![allow(non_snake_case)]
 #[macro_use] 
 extern crate rocket;
 
-use rocket::{get, http::Status, serde::json::Json};
-use serde::Serialize;
+use rocket::{ 
+  http::{Status, ContentType}, 
+  serde::{Deserialize, Serialize},
+  Responder, response
+};
 
 
-#[derive(Serialize)]
-pub struct User {
-  pub name: String,
-  pub password: String,
-  pub email: String,
+#[derive(Responder)]
+#[response(status = 200, content_type = "json")]
+struct UserResponse {
+  id: u32,
+  name: &'static str,
+  password: &'static str,
+  email: &'static str,
 }
 
-#[get("/hello")]
-pub async fn hello() -> Result<Json<User>, Status> {
-  let user = User {
-    name: "bob1234".to_string(),
-    password: "Pa$$w0rd".to_string(),
-    email: "bob@test.com".to_string()
-  };
-  Ok(Json(user))
+
+#[get("/api/hello")]
+fn hello() -> UserResponse {
+  let username = "alex1234";
+  let password = "Pa$$w0rd";
+  let email = "alex@test.com";
+  
+  UserResponse { 
+    id: 1, 
+    name: &username, 
+    password: &password, 
+    email: "alex@test.com" 
+  }
 }
 
 

@@ -37,6 +37,7 @@
 # Personal notes for the project
 notes.md
 
+# Ignore environment variable files
 .env
 env
 
