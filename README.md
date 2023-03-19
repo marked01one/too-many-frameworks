@@ -37,10 +37,13 @@ The app will have a total of 10 server-side frameworks & 7 client-side framework
 ### Client-side Frameworks
 | Language            | Framework         |
 | :---                | :---              |
-| JavaScript          | Vanilla + jQuery  |
+| Python              | Dash              |
+| JavaScript          | Vanilla           |
+| JavaScript          | jQuery            |
 | JavaScript          | React             |
 | TypeScript          | Angular           |
 | TypeScript          | Vue               |
 | TypeScript          | Svelte            |
+| Dart                | Flutter           |
 | C# / WebAssembly    | Blazor            |
 | Rust / WebAssembly  | Yew               |

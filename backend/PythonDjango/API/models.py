@@ -1,12 +1,13 @@
 from django.db import models
-from django.core.validators import validate_slug, validate_email, RegexValidator
+from django.core.validators import validate_slug, validate_email, RegexValidator, MinLengthValidator
 
 
 # Model class for users
 class TodoUser(models.Model):
-  user_name = models.CharField(unique=True, max_length=31, validators=[validate_slug])
+  user_name = models.CharField(unique=True, max_length=31, validators=[validate_slug, MinLengthValidator(4)])
   user_password = models.CharField(max_length=31, validators=[
-    RegexValidator("(?=^.{6,31}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$")
+    RegexValidator("(?=^.{6,31}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$"),
+    MinLengthValidator(4)
   ])
   user_email = models.CharField(unique=True, max_length=31, validators=[validate_email])
   
@@ -22,7 +23,7 @@ class TodoUser(models.Model):
 # Model class for the Todo lists
 class TodoList(models.Model):
   user = models.ForeignKey(TodoUser, on_delete=models.CASCADE)
-  name = models.CharField(max_length=255)
+  name = models.CharField(max_length=255, validators=[validate_slug, MinLengthValidator(4)])
   
   class Meta:
     app_label = 'api'

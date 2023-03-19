@@ -26,19 +26,12 @@ CREATE TABLE todos (
 
 
 
+
 -- @block Return all users
-SELECT * FROM todo_users
-
--- @block Create new test users
-INSERT INTO todo_users (user_name, user_password, user_email)
-VALUES 
-  ('alex1234', 'Pa$$w0rd', 'alex@test.com'),
-  ('bob1234', 'Pa$$w0rd', 'bob@test.com'),
-  ('christine1234', 'Pa$$w0rd', 'christine@test.com');
 
 
 
--- TODO1: Testing users. If query returns with error --> It's working properly
+-- ? Testing users. If query returns with error --> It's working properly
 
 -- @block Test adding users with duplicate name
 INSERT INTO todo_users (user_name, user_password, user_email)
@@ -47,6 +40,10 @@ INSERT INTO todo_users (user_name, user_password, user_email)
 -- @block Test adding users with duplicate emails
 INSERT INTO todo_users (user_name, user_password, user_email)
   VALUES ('alex1234fake', 'Pa$$w0rd', 'alex@test.com')
+
+
+-- ? Testing users. If query returns with error --> It's working properly
+
 
 
 
